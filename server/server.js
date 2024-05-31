@@ -6,6 +6,7 @@ const dotenv = require('dotenv')
 dotenv.config();
 console.log(process.env.MONGODB_URI);
 console.log(process.env.NODE_ENV);
+const { authMiddleware } = require('./utils/auth');
 
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
@@ -31,7 +32,9 @@ const startApolloServer = async () => {
     });
   }
   
-    app.use('/graphql', expressMiddleware(server));
+  app.use('/graphql', expressMiddleware(server, {
+    context: authMiddleware
+  }));
 
   db.once('open', () => {
     app.listen(PORT, () => {
