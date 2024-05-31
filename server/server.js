@@ -2,6 +2,10 @@ const express = require('express');
 const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
+const dotenv = require('dotenv')
+dotenv.config();
+console.log(process.env.MONGODB_URI);
+console.log(process.env.NODE_ENV);
 
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
